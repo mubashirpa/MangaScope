@@ -8,4 +8,10 @@ sealed class Route {
 
     @Serializable
     data object Home : Route()
+
+    @Serializable
+    data object Manga : Route()
+
+    @Serializable
+    data object FaceRecognition : Route()
 }
