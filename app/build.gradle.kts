@@ -75,4 +75,5 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.bundles.paging)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.datastore.preferences)
 }
