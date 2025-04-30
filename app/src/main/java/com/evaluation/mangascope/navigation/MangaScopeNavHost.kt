@@ -23,7 +23,13 @@ fun MangaScopeNavHost(
         modifier = modifier,
     ) {
         composable<Route.SignIn> {
-            SignInScreen()
+            SignInScreen(
+                onSignInComplete = {
+                    navController.navigate(Route.Home) {
+                        popUpTo(Route.SignIn) { inclusive = true }
+                    }
+                },
+            )
         }
         composable<Route.Home> {
             Box(
