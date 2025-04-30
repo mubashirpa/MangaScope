@@ -6,10 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -18,12 +18,16 @@ import com.evaluation.mangascope.navigation.MangaScopeNavHost
 import com.evaluation.mangascope.navigation.Route
 import com.evaluation.mangascope.presentation.components.LoadingScreen
 import com.evaluation.mangascope.presentation.theme.MangaScopeTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        splashScreen.setKeepOnScreenCondition { viewModel.uiState.isLoading }
 
         enableEdgeToEdge(
             statusBarStyle =
@@ -37,9 +41,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             MangaScopeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding),
+                    MangaScopeApplication(
+                        uiState = viewModel.uiState,
+                        modifier =
+                            Modifier
+                                .padding(innerPadding)
+                                .consumeWindowInsets(innerPadding),
                     )
                 }
             }
@@ -48,20 +55,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(
-    name: String,
+private fun MangaScopeApplication(
+    uiState: MainUiState,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun GreetingPreview() {
-    MangaScopeTheme {
-        Greeting("Android")
+    if (uiState.isLoading) {
+        LoadingScreen(modifier = modifier)
+    } else {
+        MangaScopeNavHost(
+            navController = rememberNavController(),
+            startDestination = if (uiState.isUserSignedIn) Route.Home else Route.SignIn,
+            modifier = modifier,
+        )
     }
 }
