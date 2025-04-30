@@ -74,4 +74,5 @@ dependencies {
     implementation(libs.bundles.room)
     ksp(libs.room.compiler)
     implementation(libs.bundles.paging)
+    implementation(libs.androidx.core.splashscreen)
 }
