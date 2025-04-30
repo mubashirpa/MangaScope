@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
@@ -19,14 +18,22 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -37,20 +44,65 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import com.evaluation.mangascope.R
 import com.evaluation.mangascope.presentation.components.EmailField
 import com.evaluation.mangascope.presentation.components.PasswordField
+import com.evaluation.mangascope.presentation.components.ProgressDialog
 import com.evaluation.mangascope.presentation.theme.MangaScopeTheme
+import kotlinx.coroutines.flow.filter
+import org.koin.androidx.compose.koinViewModel
+
+@Composable
+fun SignInScreen(
+    onSignInComplete: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SignInViewModel = koinViewModel(),
+) {
+    val currentOnSignInComplete by rememberUpdatedState(onSignInComplete)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect(viewModel, lifecycle) {
+        snapshotFlow { viewModel.uiState }
+            .filter { it.isSignInComplete }
+            .flowWithLifecycle(lifecycle)
+            .collect {
+                currentOnSignInComplete()
+            }
+    }
+
+    SignInScreenContent(
+        uiState = viewModel.uiState,
+        onEvent = viewModel::onEvent,
+        modifier = modifier,
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier) {
+private fun SignInScreenContent(
+    uiState: SignInUiState,
+    onEvent: (SignInUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val focusManger = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    uiState.userMessage?.let { userMessage ->
+        LaunchedEffect(userMessage) {
+            snackbarHostState.showSnackbar(userMessage.asString(context))
+            // Once the message is displayed and dismissed, notify the ViewModel.
+            onEvent(SignInUiEvent.UserMessageShown)
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -68,6 +120,9 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                     }
                 },
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
     ) { innerPadding ->
         Column(
@@ -111,16 +166,17 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                         modifier = Modifier.padding(vertical = 16.dp),
                     )
                     EmailField(
-                        state = rememberTextFieldState(),
+                        state = uiState.emailState,
                         focusManager = focusManger,
                         keyboardController = keyboardController,
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = {
                             Text(text = stringResource(R.string.your_email_address))
                         },
+                        imeAction = ImeAction.Next,
                     )
                     PasswordField(
-                        state = rememberTextFieldState(),
+                        state = uiState.passwordState,
                         focusManager = focusManger,
                         keyboardController = keyboardController,
                         modifier =
@@ -133,8 +189,11 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                     )
                     ForgotPasswordText(modifier = Modifier.align(Alignment.End))
                     Button(
-                        onClick = {},
+                        onClick = {
+                            onEvent(SignInUiEvent.SignIn)
+                        },
                         modifier = Modifier.fillMaxWidth(),
+                        enabled = uiState.signInButtonEnabled,
                     ) {
                         Text(text = stringResource(R.string.sign_in))
                     }
@@ -144,6 +203,11 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.weight(1f))
         }
     }
+
+    ProgressDialog(
+        open = uiState.openProgressDialog,
+        onDismissRequest = {},
+    )
 }
 
 @Composable
@@ -252,6 +316,9 @@ private fun SignUpText(
 @Composable
 private fun SignInScreenPreview() {
     MangaScopeTheme {
-        SignInScreen()
+        SignInScreenContent(
+            uiState = SignInUiState(),
+            onEvent = {},
+        )
     }
 }
