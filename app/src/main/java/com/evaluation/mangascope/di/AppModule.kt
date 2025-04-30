@@ -8,6 +8,7 @@ import com.evaluation.mangascope.domain.repository.AuthenticationRepository
 import com.evaluation.mangascope.domain.usecase.IsUserSignedInUseCase
 import com.evaluation.mangascope.domain.usecase.SignInUseCase
 import com.evaluation.mangascope.presentation.main.MainViewModel
+import com.evaluation.mangascope.presentation.signIn.SignInViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
@@ -31,4 +32,5 @@ val appModule =
         singleOf(::SignInUseCase)
         singleOf(::IsUserSignedInUseCase)
         viewModelOf(::MainViewModel)
+        viewModelOf(::SignInViewModel)
     }
