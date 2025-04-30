@@ -1,4 +1,4 @@
-package com.evaluation.mangascope.ui.theme
+package com.evaluation.mangascope.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
