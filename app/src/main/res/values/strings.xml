@@ -12,6 +12,7 @@
     <string name="welcome_back">Welcome back</string>
     <string name="please_enter_your_details_to_sign_in">Please enter your details to sign in</string>
     <string name="zenithra">Zenithra</string>
+    <string name="retry">Retry</string>
 
     <string name="label_manga_screen">Manga</string>
     <string name="label_face_recognition_screen">Face</string>
