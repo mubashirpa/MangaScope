@@ -9,6 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.evaluation.mangascope.presentation.manga.MangaScreen
+import com.evaluation.mangascope.presentation.manga.MangaViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeNavHost(
@@ -21,12 +24,11 @@ fun HomeNavHost(
         modifier = modifier,
     ) {
         composable<Route.Manga> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = "Coming Soon")
-            }
+            val viewModel: MangaViewModel = koinViewModel()
+            MangaScreen(
+                uiState = viewModel.uiState,
+                onNavigateToMangaDetails = { /*TODO*/ },
+            )
         }
         composable<Route.FaceRecognition> {
             Box(
