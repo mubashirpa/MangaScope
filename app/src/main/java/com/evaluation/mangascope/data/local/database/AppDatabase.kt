@@ -7,6 +7,7 @@ import com.evaluation.mangascope.data.local.dao.MangaDao
 import com.evaluation.mangascope.data.local.dao.RemoteKeyDao
 import com.evaluation.mangascope.data.local.dao.UserDao
 import com.evaluation.mangascope.data.local.entity.CacheMetadataEntity
+import com.evaluation.mangascope.data.local.entity.FavoriteMangaEntity
 import com.evaluation.mangascope.data.local.entity.MangaEntity
 import com.evaluation.mangascope.data.local.entity.RemoteKeyEntity
 import com.evaluation.mangascope.data.local.entity.UserEntity
@@ -14,6 +15,7 @@ import com.evaluation.mangascope.data.local.entity.UserEntity
 @Database(
     entities = [
         UserEntity::class, MangaEntity::class, CacheMetadataEntity::class, RemoteKeyEntity::class,
+        FavoriteMangaEntity::class,
     ],
     version = 1,
 )
