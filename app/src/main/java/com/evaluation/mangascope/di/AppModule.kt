@@ -14,6 +14,7 @@ import com.evaluation.mangascope.domain.usecase.SignInUseCase
 import com.evaluation.mangascope.domain.usecase.UpdateMangaFavoriteUseCase
 import com.evaluation.mangascope.presentation.main.MainViewModel
 import com.evaluation.mangascope.presentation.manga.MangaViewModel
+import com.evaluation.mangascope.presentation.mangaDetails.MangaDetailsViewModel
 import com.evaluation.mangascope.presentation.signIn.SignInViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -64,4 +65,5 @@ val appModule =
         viewModelOf(::MainViewModel)
         viewModelOf(::SignInViewModel)
         viewModelOf(::MangaViewModel)
+        viewModelOf(::MangaDetailsViewModel)
     }
