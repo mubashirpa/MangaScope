@@ -14,4 +14,9 @@ sealed class Route {
 
     @Serializable
     data object FaceRecognition : Route()
+
+    @Serializable
+    data class MangaDetails(
+        val id: String,
+    ) : Route()
 }

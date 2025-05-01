@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.evaluation.mangascope.presentation.manga.MangaScreen
 import com.evaluation.mangascope.presentation.manga.MangaViewModel
+import com.evaluation.mangascope.presentation.mangaDetails.MangaDetailsScreen
+import com.evaluation.mangascope.presentation.mangaDetails.MangaDetailsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -27,7 +29,9 @@ fun HomeNavHost(
             val viewModel: MangaViewModel = koinViewModel()
             MangaScreen(
                 uiState = viewModel.uiState,
-                onNavigateToMangaDetails = { /*TODO*/ },
+                onNavigateToMangaDetails = { mangaId ->
+                    navController.navigate(Route.MangaDetails(mangaId))
+                },
             )
         }
         composable<Route.FaceRecognition> {
@@ -37,6 +41,13 @@ fun HomeNavHost(
             ) {
                 Text(text = "Coming Soon")
             }
+        }
+        composable<Route.MangaDetails> {
+            val viewModel: MangaDetailsViewModel = koinViewModel()
+            MangaDetailsScreen(
+                uiState = viewModel.uiState,
+                onEvent = viewModel::onEvent,
+            )
         }
     }
 }
