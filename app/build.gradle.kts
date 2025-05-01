@@ -90,4 +90,5 @@ dependencies {
     implementation(libs.bundles.paging)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.bundles.coil)
 }
