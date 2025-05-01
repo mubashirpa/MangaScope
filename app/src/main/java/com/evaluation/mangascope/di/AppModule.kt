@@ -7,9 +7,11 @@ import com.evaluation.mangascope.data.repository.MangaVerseRepositoryImpl
 import com.evaluation.mangascope.data.repository.dataStore
 import com.evaluation.mangascope.domain.repository.AuthenticationRepository
 import com.evaluation.mangascope.domain.repository.MangaVerseRepository
+import com.evaluation.mangascope.domain.usecase.GetMangaDetailsUseCase
 import com.evaluation.mangascope.domain.usecase.GetMangaUseCase
 import com.evaluation.mangascope.domain.usecase.IsUserSignedInUseCase
 import com.evaluation.mangascope.domain.usecase.SignInUseCase
+import com.evaluation.mangascope.domain.usecase.UpdateMangaFavoriteUseCase
 import com.evaluation.mangascope.presentation.main.MainViewModel
 import com.evaluation.mangascope.presentation.manga.MangaViewModel
 import com.evaluation.mangascope.presentation.signIn.SignInViewModel
@@ -57,6 +59,8 @@ val appModule =
         singleOf(::SignInUseCase)
         singleOf(::IsUserSignedInUseCase)
         singleOf(::GetMangaUseCase)
+        singleOf(::GetMangaDetailsUseCase)
+        singleOf(::UpdateMangaFavoriteUseCase)
         viewModelOf(::MainViewModel)
         viewModelOf(::SignInViewModel)
         viewModelOf(::MangaViewModel)
