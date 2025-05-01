@@ -7,6 +7,8 @@ import androidx.paging.PagingData
 import com.evaluation.mangascope.BuildConfig
 import com.evaluation.mangascope.core.Constants
 import com.evaluation.mangascope.data.local.database.AppDatabase
+import com.evaluation.mangascope.data.local.entity.FavoriteMangaEntity
+import com.evaluation.mangascope.data.local.entity.MangaAndFavorite
 import com.evaluation.mangascope.data.local.entity.MangaEntity
 import com.evaluation.mangascope.data.remote.dto.MangaListDto
 import com.evaluation.mangascope.data.remote.paging.MangaRemoteMediator
@@ -23,6 +25,8 @@ class MangaVerseRepositoryImpl(
     private val httpClient: HttpClient,
     private val database: AppDatabase,
 ) : MangaVerseRepository {
+    private val mangaDao = database.mangaDao()
+
     override suspend fun getManga(
         page: Int,
         genres: List<String>,
@@ -63,7 +67,21 @@ class MangaVerseRepositoryImpl(
                     type = type,
                 ),
             pagingSourceFactory = {
-                database.mangaDao().pagingSource()
+                mangaDao.pagingSource()
             },
         ).flow
+
+    override suspend fun getMangaDetails(id: String): Flow<MangaAndFavorite> = mangaDao.getMangaDetailsById(id)
+
+    override suspend fun updateFavorite(
+        id: String,
+        isFavorite: Boolean,
+    ) {
+        mangaDao.updateFavorite(
+            FavoriteMangaEntity(
+                mangaId = id,
+                isFavorite = isFavorite,
+            ),
+        )
+    }
 }

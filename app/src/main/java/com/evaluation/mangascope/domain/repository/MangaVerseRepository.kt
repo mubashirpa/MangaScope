@@ -1,6 +1,7 @@
 package com.evaluation.mangascope.domain.repository
 
 import androidx.paging.PagingData
+import com.evaluation.mangascope.data.local.entity.MangaAndFavorite
 import com.evaluation.mangascope.data.local.entity.MangaEntity
 import com.evaluation.mangascope.data.remote.dto.MangaListDto
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,13 @@ interface MangaVerseRepository {
         nsfw: Boolean = true,
         type: MangaType = MangaType.ALL,
     ): Flow<PagingData<MangaEntity>>
+
+    suspend fun getMangaDetails(id: String): Flow<MangaAndFavorite>
+
+    suspend fun updateFavorite(
+        id: String,
+        isFavorite: Boolean,
+    )
 }
 
 enum class MangaType {
