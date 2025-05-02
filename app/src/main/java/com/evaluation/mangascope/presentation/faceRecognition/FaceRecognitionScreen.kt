@@ -18,9 +18,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -98,7 +96,6 @@ fun FaceRecognitionScreen(
 
     DisposableEffect(lifecycleOwner) {
         onEvent(FaceRecognitionUiEvent.BindToCamera(lifecycleOwner))
-
         val observer =
             LifecycleEventObserver { _, event ->
                 when (event) {
