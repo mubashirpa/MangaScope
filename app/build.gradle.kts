@@ -58,6 +58,9 @@ android {
     room {
         schemaDirectory("$projectDir/schemas")
     }
+    androidResources {
+        noCompress.add("tflite")
+    }
 }
 
 dependencies {
@@ -91,4 +94,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.bundles.coil)
+    implementation(libs.tasks.vision)
+    implementation(libs.bundles.camera)
 }
