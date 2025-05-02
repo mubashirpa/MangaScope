@@ -5,6 +5,7 @@ import com.evaluation.mangascope.core.UiText
 import com.google.mediapipe.tasks.vision.facedetector.FaceDetectorResult
 
 data class FaceRecognitionUiState(
+    val faceDetected: Boolean = false,
     val faceDetectorResult: FaceDetectorResult? = null,
     val imageWidth: Int = 0,
     val imageHeight: Int = 0,

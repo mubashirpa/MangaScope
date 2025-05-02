@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -130,6 +131,13 @@ private fun FaceRecognitionScreenContent(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
+        val borderColor =
+            if (uiState.faceDetected) {
+                Color.Green
+            } else {
+                Color.Red
+            }
+
         uiState.surfaceRequest?.let { surfaceRequest ->
             CameraXViewfinder(
                 surfaceRequest = surfaceRequest,
@@ -143,7 +151,7 @@ private fun FaceRecognitionScreenContent(
                     .aspectRatio(0.75f)
                     .border(
                         1.dp,
-                        MaterialTheme.colorScheme.primary,
+                        borderColor,
                         MaterialTheme.shapes.medium,
                     ),
         ) {

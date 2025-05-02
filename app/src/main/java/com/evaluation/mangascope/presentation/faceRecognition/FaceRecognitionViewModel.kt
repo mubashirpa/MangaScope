@@ -4,6 +4,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -43,9 +44,14 @@ class FaceRecognitionViewModel(
 
     override fun onResults(result: FaceDetectorHelper.ResultBundle) {
         val faceDetectorResult = result.results.firstOrNull()
+        val faceDetected by
+            derivedStateOf {
+                (faceDetectorResult?.detections()?.size ?: 0) > 0
+            }
 
         uiState =
             uiState.copy(
+                faceDetected = faceDetected,
                 faceDetectorResult = faceDetectorResult,
                 imageWidth = result.inputImageWidth,
                 imageHeight = result.inputImageHeight,
