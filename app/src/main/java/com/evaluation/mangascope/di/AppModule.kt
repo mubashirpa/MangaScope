@@ -1,12 +1,16 @@
 package com.evaluation.mangascope.di
 
 import androidx.room.Room
+import com.evaluation.mangascope.core.FaceDetectorHelper
 import com.evaluation.mangascope.data.local.database.AppDatabase
 import com.evaluation.mangascope.data.repository.AuthenticationRepositoryImpl
+import com.evaluation.mangascope.data.repository.CameraRepositoryImpl
 import com.evaluation.mangascope.data.repository.MangaVerseRepositoryImpl
 import com.evaluation.mangascope.data.repository.dataStore
 import com.evaluation.mangascope.domain.repository.AuthenticationRepository
+import com.evaluation.mangascope.domain.repository.CameraRepository
 import com.evaluation.mangascope.domain.repository.MangaVerseRepository
+import com.evaluation.mangascope.domain.usecase.BindToCameraUseCase
 import com.evaluation.mangascope.domain.usecase.GetMangaDetailsUseCase
 import com.evaluation.mangascope.domain.usecase.GetMangaUseCase
 import com.evaluation.mangascope.domain.usecase.IsUserSignedInUseCase
@@ -55,13 +59,16 @@ val appModule =
             database.userDao()
         }
         single { androidContext().dataStore }
+        single { FaceDetectorHelper(androidContext()) }
         singleOf(::AuthenticationRepositoryImpl) { bind<AuthenticationRepository>() }
         singleOf(::MangaVerseRepositoryImpl) { bind<MangaVerseRepository>() }
+        singleOf(::CameraRepositoryImpl) { bind<CameraRepository>() }
         singleOf(::SignInUseCase)
         singleOf(::IsUserSignedInUseCase)
         singleOf(::GetMangaUseCase)
         singleOf(::GetMangaDetailsUseCase)
         singleOf(::UpdateMangaFavoriteUseCase)
+        singleOf(::BindToCameraUseCase)
         viewModelOf(::MainViewModel)
         viewModelOf(::SignInViewModel)
         viewModelOf(::MangaViewModel)
