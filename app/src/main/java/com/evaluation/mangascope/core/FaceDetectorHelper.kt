@@ -28,16 +28,16 @@ class FaceDetectorHelper(
     }
 
     fun initFaceDetector() {
-        val modelName = "blaze_face_short_range.tflite"
-
-        val baseOptionsBuilder =
-            BaseOptions
-                .builder()
-                .setModelAssetPath(modelName)
-                .setDelegate(delegate)
-        val baseOptions = baseOptionsBuilder.build()
-
         try {
+            val modelName = "blaze_face_short_range.tflite"
+
+            val baseOptionsBuilder =
+                BaseOptions
+                    .builder()
+                    .setModelAssetPath(modelName)
+                    .setDelegate(delegate)
+            val baseOptions = baseOptionsBuilder.build()
+
             val optionsBuilder =
                 FaceDetector.FaceDetectorOptions
                     .builder()
@@ -53,6 +53,9 @@ class FaceDetectorHelper(
             faceDetectorListener?.onError("Face detector failed to initialize. See error logs for details")
             Log.e(TAG, "TFLite failed to load model with error: ${e.message}", e)
         } catch (e: RuntimeException) {
+            faceDetectorListener?.onError("Face detector failed to initialize. See error logs for details")
+            Log.e(TAG, "Face detector failed to load model with error: ${e.message}", e)
+        } catch (e: Exception) {
             faceDetectorListener?.onError("Face detector failed to initialize. See error logs for details")
             Log.e(TAG, "Face detector failed to load model with error: ${e.message}", e)
         }
@@ -90,7 +93,11 @@ class FaceDetectorHelper(
         val mpIMage = BitmapImageBuilder(rotatedBitmap).build()
         val frameTime = SystemClock.uptimeMillis()
 
-        faceDetector?.detectAsync(mpIMage, frameTime)
+        try {
+            faceDetector?.detectAsync(mpIMage, frameTime)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun returnLiveStreamResult(
