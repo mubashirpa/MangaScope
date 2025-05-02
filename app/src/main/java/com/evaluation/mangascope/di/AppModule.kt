@@ -22,6 +22,7 @@ import com.evaluation.mangascope.presentation.manga.MangaViewModel
 import com.evaluation.mangascope.presentation.mangaDetails.MangaDetailsViewModel
 import com.evaluation.mangascope.presentation.signIn.SignInViewModel
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -34,7 +35,7 @@ import org.koin.dsl.module
 val appModule =
     module {
         single {
-            HttpClient {
+            HttpClient(OkHttp) {
                 expectSuccess = true
                 install(ContentNegotiation) {
                     json(

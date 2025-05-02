@@ -46,7 +46,7 @@ koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koinBom
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
@@ -79,7 +79,7 @@ koin = [
 ]
 ktor = [
     "ktor-client-core",
-    "ktor-client-android",
+    "ktor-client-okhttp",
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
 ]
