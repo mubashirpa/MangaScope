@@ -96,4 +96,5 @@ dependencies {
     implementation(libs.bundles.coil)
     implementation(libs.tasks.vision)
     implementation(libs.bundles.camera)
+    implementation(libs.accompanist.permissions)
 }
