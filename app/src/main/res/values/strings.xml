@@ -13,6 +13,9 @@
     <string name="please_enter_your_details_to_sign_in">Please enter your details to sign in</string>
     <string name="zenithra">Zenithra</string>
     <string name="retry">Retry</string>
+    <string name="camera_permission_denied_rationale_message">The camera is important for this app. Please grant the permission</string>
+    <string name="camera_permission_denied_message">Camera permission required for this feature to be available. Please grant the permission</string>
+    <string name="open_settings">Open Settings</string>
 
     <string name="label_manga_screen">Manga</string>
     <string name="label_face_recognition_screen">Face</string>
@@ -20,4 +23,5 @@
     <string name="error_unexpected">An unexpected error occurred.</string>
     <string name="error_unknown">Something wrong happened. Please try again.</string>
     <string name="error_sign_in">Unable to sign in. Please try again</string>
+
 </resources>
