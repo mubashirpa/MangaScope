@@ -16,6 +16,7 @@ import com.evaluation.mangascope.domain.usecase.GetMangaUseCase
 import com.evaluation.mangascope.domain.usecase.IsUserSignedInUseCase
 import com.evaluation.mangascope.domain.usecase.SignInUseCase
 import com.evaluation.mangascope.domain.usecase.UpdateMangaFavoriteUseCase
+import com.evaluation.mangascope.presentation.faceRecognition.FaceRecognitionViewModel
 import com.evaluation.mangascope.presentation.main.MainViewModel
 import com.evaluation.mangascope.presentation.manga.MangaViewModel
 import com.evaluation.mangascope.presentation.mangaDetails.MangaDetailsViewModel
@@ -73,4 +74,5 @@ val appModule =
         viewModelOf(::SignInViewModel)
         viewModelOf(::MangaViewModel)
         viewModelOf(::MangaDetailsViewModel)
+        viewModelOf(::FaceRecognitionViewModel)
     }
