@@ -1,6 +1,5 @@
 package com.evaluation.mangascope.presentation.manga.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
@@ -35,9 +34,6 @@ fun MangaListItem(
                     .fillMaxWidth()
                     .aspectRatio(4F / 5F),
             contentScale = ContentScale.FillBounds,
-            onError = {
-                Log.e("hello", it.result.throwable.message, it.result.throwable)
-            },
         )
     }
 }
