@@ -32,9 +32,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.evaluation.mangascope.BuildConfig
-import com.evaluation.mangascope.OverlayView
 import com.evaluation.mangascope.R
 import com.evaluation.mangascope.presentation.components.ErrorScreen
+import com.evaluation.mangascope.presentation.components.OverlayView
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
