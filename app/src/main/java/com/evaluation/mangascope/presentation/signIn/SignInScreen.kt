@@ -63,6 +63,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignInScreen(
+    onNavigateUp: () -> Unit,
     onSignInComplete: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignInViewModel = koinViewModel(),
@@ -82,6 +83,7 @@ fun SignInScreen(
     SignInScreenContent(
         uiState = viewModel.uiState,
         onEvent = viewModel::onEvent,
+        onNavigateUp = onNavigateUp,
         modifier = modifier,
     )
 }
@@ -91,6 +93,7 @@ fun SignInScreen(
 private fun SignInScreenContent(
     uiState: SignInUiState,
     onEvent: (SignInUiEvent) -> Unit,
+    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManger = LocalFocusManager.current
@@ -114,7 +117,7 @@ private fun SignInScreenContent(
                     Text(text = stringResource(R.string.sign_in))
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = onNavigateUp) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = null,
@@ -322,6 +325,7 @@ private fun SignInScreenPreview() {
         SignInScreenContent(
             uiState = SignInUiState(),
             onEvent = {},
+            onNavigateUp = {},
         )
     }
 }

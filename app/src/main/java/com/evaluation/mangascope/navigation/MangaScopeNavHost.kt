@@ -1,5 +1,6 @@
 package com.evaluation.mangascope.navigation
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,6 +15,7 @@ fun MangaScopeNavHost(
     startDestination: Route,
     modifier: Modifier = Modifier,
 ) {
+    val activity = LocalActivity.current
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -21,6 +23,9 @@ fun MangaScopeNavHost(
     ) {
         composable<Route.SignIn> {
             SignInScreen(
+                onNavigateUp = {
+                    activity?.finish()
+                },
                 onSignInComplete = {
                     navController.navigate(Route.Home) {
                         popUpTo(Route.SignIn) { inclusive = true }
