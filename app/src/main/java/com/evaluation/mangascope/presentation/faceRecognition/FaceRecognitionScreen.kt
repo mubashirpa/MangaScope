@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import androidx.camera.compose.CameraXViewfinder
+import androidx.camera.viewfinder.core.ImplementationMode
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -142,6 +143,7 @@ private fun FaceRecognitionScreenContent(
             CameraXViewfinder(
                 surfaceRequest = surfaceRequest,
                 modifier = Modifier.fillMaxSize(),
+                implementationMode = ImplementationMode.EMBEDDED,
             )
         }
         Box(
