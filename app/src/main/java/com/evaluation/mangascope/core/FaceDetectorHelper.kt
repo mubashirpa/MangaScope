@@ -94,7 +94,7 @@ class FaceDetectorHelper(
         val frameTime = SystemClock.uptimeMillis()
 
         try {
-            faceDetector?.detectAsync(mpIMage, frameTime)
+            mpIMage?.let { faceDetector?.detectAsync(it, frameTime) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
