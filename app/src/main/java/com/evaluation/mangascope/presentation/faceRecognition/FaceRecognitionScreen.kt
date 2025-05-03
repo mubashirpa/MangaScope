@@ -97,10 +97,13 @@ fun FaceRecognitionScreen(
     }
 
     DisposableEffect(lifecycleOwner) {
-        onEvent(FaceRecognitionUiEvent.BindToCamera(lifecycleOwner))
         val observer =
             LifecycleEventObserver { _, event ->
                 when (event) {
+                    Lifecycle.Event.ON_CREATE -> {
+                        onEvent(FaceRecognitionUiEvent.BindToCamera(lifecycleOwner))
+                    }
+
                     Lifecycle.Event.ON_RESUME -> {
                         onEvent(FaceRecognitionUiEvent.OnResume)
                     }
